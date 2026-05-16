@@ -9,10 +9,10 @@ public class EmployeeSalary : AggregateRoot<int>
 {
     public string? LastName { get; private set; }
     public string? FirstName { get; private set; }
-    public decimal BaseSalary { get; private set; }
+    public decimal BasicSalary { get; private set; }
     public DateTime Date { get; private set; }
-    public decimal AbsorptionAllowance { get; private set; }
-    public decimal TransportationAllowance { get; private set; }
+    public decimal Allowance { get; private set; }
+    public decimal Transportation { get; private set; }
     public decimal Tax { get; private set; }
     public OvertimeCalculatorName OvertimeCalculatorName { get; private set; } = null!;
     public decimal OvertimeAmount { get; private set; }
@@ -27,10 +27,10 @@ public class EmployeeSalary : AggregateRoot<int>
     {
         LastName = parameter.lastName;
         FirstName = parameter.firstName;
-        BaseSalary = parameter.baseSalary;
+        BasicSalary = parameter.basicSalary;
         Date = parameter.date;
-        AbsorptionAllowance = parameter.absorptionAllowance;
-        TransportationAllowance = parameter.transportationAllowance;
+        Allowance = parameter.allowance;
+        Transportation = parameter.transportation;
         Tax = parameter.tax;
         OvertimeCalculatorName = parameter.overtimeCalculatorName;
         ApplySalaryCalculation(parameter.overtimeAmount);
@@ -40,10 +40,10 @@ public class EmployeeSalary : AggregateRoot<int>
     {
         LastName = parameter.lastName;
         FirstName = parameter.firstName;
-        BaseSalary = parameter.baseSalary;
+        BasicSalary = parameter.basicSalary;
         Date = parameter.date;
-        AbsorptionAllowance = parameter.absorptionAllowance;
-        TransportationAllowance = parameter.transportationAllowance;
+        Allowance = parameter.allowance;
+        Transportation = parameter.transportation;
         Tax = parameter.tax;
         OvertimeCalculatorName = parameter.overtimeCalculatorName;
         ApplySalaryCalculation(parameter.overtimeAmount);
@@ -57,9 +57,9 @@ public class EmployeeSalary : AggregateRoot<int>
     private void ApplySalaryCalculation(decimal overtimeAmount)
     {
         OvertimeAmount = overtimeAmount;
-        ReceivedSalary = BaseSalary
-                         + AbsorptionAllowance
-                         + TransportationAllowance
+        ReceivedSalary = BasicSalary
+                         + Allowance
+                         + Transportation
                          + OvertimeAmount
                          - Tax;
     }

@@ -8,10 +8,10 @@ public class EmployeeSalary
     public int Id { get; set; }
     public string? LastName { get; set; }
     public string? FirstName { get; set; }
-    public decimal BaseSalary { get; set; }
+    public decimal BasicSalary { get; set; }
     public DateTime Date { get; set; }
-    public decimal AbsorptionAllowance { get; set; }
-    public decimal TransportationAllowance { get; set; }
+    public decimal Allowance { get; set; }
+    public decimal Transportation { get; set; }
     public decimal Tax { get; set; }
     public string? OvertimeCalculatorName { get; set; }
     public decimal OvertimeAmount { get; set; }
@@ -23,10 +23,10 @@ public class EmployeeSalary
         Id = entity.Id,
         LastName = entity.LastName,
         FirstName = entity.FirstName,
-        BaseSalary = entity.BaseSalary,
+        BasicSalary = entity.BasicSalary,
         Date = entity.Date,
-        AbsorptionAllowance = entity.AbsorptionAllowance,
-        TransportationAllowance = entity.TransportationAllowance,
+        Allowance = entity.Allowance,
+        Transportation = entity.Transportation,
         Tax = entity.Tax,
         OvertimeCalculatorName = entity.OvertimeCalculatorName,
         OvertimeAmount = entity.OvertimeAmount,
@@ -38,10 +38,10 @@ public class EmployeeSalary
         Id = entity.Id,
         LastName = entity.LastName,
         FirstName = entity.FirstName,
-        BaseSalary = entity.BaseSalary,
+        BasicSalary = entity.BasicSalary,
         Date = entity.Date,
-        AbsorptionAllowance = entity.AbsorptionAllowance,
-        TransportationAllowance = entity.TransportationAllowance,
+        Allowance = entity.Allowance,
+        Transportation = entity.Transportation,
         Tax = entity.Tax,
         OvertimeCalculatorName = entity.OvertimeCalculatorName,
         OvertimeAmount = entity.OvertimeAmount,

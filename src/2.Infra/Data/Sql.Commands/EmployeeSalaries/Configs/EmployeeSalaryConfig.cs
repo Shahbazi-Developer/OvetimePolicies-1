@@ -32,10 +32,10 @@ public class EmployeeSalaryConfig : IEntityTypeConfiguration<EmployeeSalary>
             .HasMaxLength(MaxLengthConfiguration.NAME_MAX_LENGTH)
             .HasColumnName(nameof(EmployeeSalary.FirstName));
 
-        builder.Property(c => c.BaseSalary).HasColumnName(nameof(EmployeeSalary.BaseSalary));
+        builder.Property(c => c.BasicSalary).HasColumnName(nameof(EmployeeSalary.BasicSalary));
         builder.Property(c => c.Date).HasColumnName(nameof(EmployeeSalary.Date));
-        builder.Property(c => c.AbsorptionAllowance).HasColumnName(nameof(EmployeeSalary.AbsorptionAllowance));
-        builder.Property(c => c.TransportationAllowance).HasColumnName(nameof(EmployeeSalary.TransportationAllowance));
+        builder.Property(c => c.Allowance).HasColumnName(nameof(EmployeeSalary.Allowance));
+        builder.Property(c => c.Transportation).HasColumnName(nameof(EmployeeSalary.Transportation));
         builder.Property(c => c.Tax).HasColumnName(nameof(EmployeeSalary.Tax));
         builder.Property(c => c.OvertimeAmount).HasColumnName(nameof(EmployeeSalary.OvertimeAmount));
         builder.Property(c => c.ReceivedSalary).HasColumnName(nameof(EmployeeSalary.ReceivedSalary));

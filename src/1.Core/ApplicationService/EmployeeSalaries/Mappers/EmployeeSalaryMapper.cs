@@ -12,16 +12,16 @@ public static class EmployeeSalaryMapper
     {
         var overtimeAmount = OvertimePolicyResolver.GetOvertimeAmount(
             command.OvertimeCalculatorName,
-            command.BaseSalary,
-            command.AbsorptionAllowance);
+            command.BasicSalary,
+            command.Allowance);
 
         return new EmployeeSalaryCreateParameter(
             lastName: command.LastName,
             firstName: command.FirstName,
-            baseSalary: command.BaseSalary,
+            basicSalary: command.BasicSalary,
             date: command.Date,
-            absorptionAllowance: command.AbsorptionAllowance,
-            transportationAllowance: command.TransportationAllowance,
+            allowance: command.Allowance,
+            transportation: command.Transportation,
             tax: command.Tax,
             overtimeCalculatorName: command.OvertimeCalculatorName,
             overtimeAmount: overtimeAmount);
@@ -31,16 +31,16 @@ public static class EmployeeSalaryMapper
     {
         var overtimeAmount = OvertimePolicyResolver.GetOvertimeAmount(
             command.OvertimeCalculatorName,
-            command.BaseSalary,
-            command.AbsorptionAllowance);
+            command.BasicSalary,
+            command.Allowance);
 
         return new EmployeeSalaryUpdateParameter(
             lastName: command.LastName,
             firstName: command.FirstName,
-            baseSalary: command.BaseSalary,
+            basicSalary: command.BasicSalary,
             date: command.Date,
-            absorptionAllowance: command.AbsorptionAllowance,
-            transportationAllowance: command.TransportationAllowance,
+            allowance: command.Allowance,
+            transportation: command.Transportation,
             tax: command.Tax,
             overtimeCalculatorName: command.OvertimeCalculatorName,
             overtimeAmount: overtimeAmount);

@@ -27,10 +27,10 @@ namespace OvetimePolicies1.Endpoints.API.EmployeeSalaries
             {
                 LastName = dto.LastName,
                 FirstName = dto.FirstName,
-                BaseSalary = dto.BaseSalary,
+                BasicSalary = dto.BasicSalary,
                 Date = dto.Date,
-                AbsorptionAllowance = dto.AbsorptionAllowance,
-                TransportationAllowance = dto.TransportationAllowance,
+                Allowance = dto.Allowance,
+                Transportation = dto.Transportation,
                 Tax = dto.Tax,
                 OvertimeCalculatorName = dto.OvertimeCalculatorName,
             };
@@ -62,10 +62,10 @@ namespace OvetimePolicies1.Endpoints.API.EmployeeSalaries
             {
                 LastName = dto.LastName,
                 FirstName = dto.FirstName,
-                BaseSalary = dto.BaseSalary,
+                BasicSalary = dto.BasicSalary,
                 Date = dto.Date,
-                AbsorptionAllowance = dto.AbsorptionAllowance,
-                TransportationAllowance = dto.TransportationAllowance,
+                Allowance = dto.Allowance,
+                Transportation = dto.Transportation,
                 Tax = dto.Tax,
                 OvertimeCalculatorName = dto.OvertimeCalculatorName,
 

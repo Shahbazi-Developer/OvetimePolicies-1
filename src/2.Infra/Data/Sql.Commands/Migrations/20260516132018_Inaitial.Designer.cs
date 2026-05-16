@@ -12,8 +12,8 @@ using OvetimePolicies1.Infra.Data.Sql.Commands.Common;
 namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
 {
     [DbContext(typeof(OvetimePolicies1CommandDbContext))]
-    [Migration("20260516104633_Initial")]
-    partial class Initial
+    [Migration("20260516132018_Inaitial")]
+    partial class Inaitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,13 +33,13 @@ namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("AbsorptionAllowance")
+                    b.Property<decimal>("Allowance")
                         .HasColumnType("decimal(18,2)")
-                        .HasColumnName("AbsorptionAllowance");
+                        .HasColumnName("Allowance");
 
-                    b.Property<decimal>("BaseSalary")
+                    b.Property<decimal>("BasicSalary")
                         .HasColumnType("decimal(18,2)")
-                        .HasColumnName("BaseSalary");
+                        .HasColumnName("BasicSalary");
 
                     b.Property<Guid>("BusinessId")
                         .HasColumnType("uniqueidentifier");
@@ -84,9 +84,9 @@ namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
                         .HasColumnType("decimal(18,2)")
                         .HasColumnName("Tax");
 
-                    b.Property<decimal>("TransportationAllowance")
+                    b.Property<decimal>("Transportation")
                         .HasColumnType("decimal(18,2)")
-                        .HasColumnName("TransportationAllowance");
+                        .HasColumnName("Transportation");
 
                     b.HasKey("Id");
 

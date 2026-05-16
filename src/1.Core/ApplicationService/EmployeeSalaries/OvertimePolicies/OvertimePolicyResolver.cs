@@ -6,11 +6,11 @@ namespace OvetimePolicies1.Core.ApplicationService.EmployeeSalaries.OvertimePoli
 
 public static class OvertimePolicyResolver
 {
-    private const string PoliciesAssemblyName = "OvetimePolicies";
+    private const string PoliciesAssemblyName = "OvetimePolicies1.Endpoints.API";
 
-    public static decimal GetOvertimeAmount(string calculatorName, decimal baseSalary, decimal absorptionAllowance)
+    public static decimal GetOvertimeAmount(string calculatorName, decimal basicSalary, decimal allowance)
     {
-        var baseAndAbsorption = baseSalary + absorptionAllowance;
+        var basicAndAllowance = basicSalary + allowance;
 
         Assembly assembly;
         try
@@ -33,7 +33,7 @@ public static class OvertimePolicyResolver
             if (method is null)
                 continue;
 
-            var result = InvokeCalculator(method, baseSalary, absorptionAllowance, baseAndAbsorption);
+            var result = InvokeCalculator(method, basicSalary, allowance, basicAndAllowance);
             if (result is not null)
                 return Convert.ToDecimal(result);
         }
@@ -61,9 +61,9 @@ public static class OvertimePolicyResolver
 
     private static object? InvokeCalculator(
         MethodInfo method,
-        decimal baseSalary,
-        decimal absorptionAllowance,
-        decimal baseAndAbsorption)
+        decimal basicSalary,
+        decimal allowance,
+        decimal basicAndAllowance)
     {
         var parameters = method.GetParameters();
         var instance = method.IsStatic ? null : Activator.CreateInstance(method.DeclaringType!);
@@ -71,11 +71,11 @@ public static class OvertimePolicyResolver
         return parameters.Length switch
         {
             0 => method.Invoke(instance, null),
-            1 when parameters[0].ParameterType == typeof(decimal) => method.Invoke(instance, [baseAndAbsorption]),
+            1 when parameters[0].ParameterType == typeof(decimal) => method.Invoke(instance, [basicAndAllowance]),
             2 when parameters[0].ParameterType == typeof(decimal) && parameters[1].ParameterType == typeof(decimal)
-                => method.Invoke(instance, [baseSalary, absorptionAllowance]),
+                => method.Invoke(instance, [basicSalary, allowance]),
             3 when AllDecimals(parameters)
-                => method.Invoke(instance, [baseSalary, absorptionAllowance, baseAndAbsorption]),
+                => method.Invoke(instance, [basicSalary, allowance, basicAndAllowance]),
             _ => null
         };
     }

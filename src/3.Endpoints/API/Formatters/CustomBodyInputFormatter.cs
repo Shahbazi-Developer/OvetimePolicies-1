@@ -49,10 +49,10 @@ public sealed class CustomBodyInputFormatter : TextInputFormatter
         {
             FirstName = GetValue(map, "FirstName", "نام"),
             LastName = GetValue(map, "LastName", "نام خانوادگی"),
-            BaseSalary = ParseDecimal(GetValue(map, "BaseSalary", "حقوق پایه")),
+            BasicSalary = ParseDecimal(GetValue(map, "BasicSalary", "حقوق پایه")),
             Date = ParseDate(GetValue(map, "Date", "تاریخ")),
-            AbsorptionAllowance = ParseDecimal(GetValue(map, "AbsorptionAllowance", "حق جذب")),
-            TransportationAllowance = ParseDecimal(GetValue(map, "TransportationAllowance", "ایاب و ذهاب")),
+            Allowance = ParseDecimal(GetValue(map, "Allowance", "فوق العاده حق جذب")),
+            Transportation = ParseDecimal(GetValue(map, "Transportation", "حق ایاب و ذهاب")),
             Tax = ParseDecimal(GetValue(map, "Tax", "مالیات")),
             OvertimeCalculatorName = GetValue(map, "OvertimeCalculatorName", "OverTimeCalculator")
         };

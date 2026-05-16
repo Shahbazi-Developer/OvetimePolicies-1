@@ -55,10 +55,10 @@ public class TranslatorValues
     public const string LAST_NAME = "نام خانوادگی";
     public const string DESCRIPTION = "توضیحات";
     public const string IMAGE_URL = "آدرس تصویر";
-    public const string BASE_SALARY = "حقوق پایه";
+    public const string BASIC_SALARY = "حقوق پایه";
     public const string DATE = "تاریخ";
-    public const string ABSORPTION_ALLOWANCE = "حق جذب";
-    public const string TRANSPORTATION_ALLOWANCE = "ایاب و ذهاب";
+    public const string ALLOWANCE = "فوق العاده حق جذب";
+    public const string TRANSPORTATION = "حق ایاب و ذهاب";
     public const string TAX = "مالیات";
     public const string OVERTIME_CALCULATOR_NAME = "روش محاسبه اضافه‌کاری";
     public const string RECEIVED_SALARY = "حقوق دریافتی";

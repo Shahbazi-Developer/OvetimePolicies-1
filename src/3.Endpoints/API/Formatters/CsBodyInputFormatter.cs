@@ -35,10 +35,10 @@ public sealed class CsBodyInputFormatter : TextInputFormatter
         {
             FirstName = ExtractValue(content, nameof(EmployeeSalaryCreateDto.FirstName)),
             LastName = ExtractValue(content, nameof(EmployeeSalaryCreateDto.LastName)),
-            BaseSalary = ParseDecimal(ExtractValue(content, nameof(EmployeeSalaryCreateDto.BaseSalary))),
+            BasicSalary = ParseDecimal(ExtractValue(content, nameof(EmployeeSalaryCreateDto.BasicSalary))),
             Date = ParseDate(ExtractValue(content, nameof(EmployeeSalaryCreateDto.Date))),
-            AbsorptionAllowance = ParseDecimal(ExtractValue(content, nameof(EmployeeSalaryCreateDto.AbsorptionAllowance))),
-            TransportationAllowance = ParseDecimal(ExtractValue(content, nameof(EmployeeSalaryCreateDto.TransportationAllowance))),
+            Allowance = ParseDecimal(ExtractValue(content, nameof(EmployeeSalaryCreateDto.Allowance))),
+            Transportation = ParseDecimal(ExtractValue(content, nameof(EmployeeSalaryCreateDto.Transportation))),
             Tax = ParseDecimal(ExtractValue(content, nameof(EmployeeSalaryCreateDto.Tax))),
             OvertimeCalculatorName = ExtractValue(content, nameof(EmployeeSalaryCreateDto.OvertimeCalculatorName))
         };

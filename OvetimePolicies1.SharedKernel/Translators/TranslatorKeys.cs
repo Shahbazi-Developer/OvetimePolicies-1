@@ -75,10 +75,10 @@ public class TranslatorKeys
     public const string LAST_NAME = nameof(LAST_NAME);
     public const string DESCRIPTION = nameof(DESCRIPTION);
     public const string IMAGE_URL = nameof(IMAGE_URL);
-    public const string BASE_SALARY = nameof(BASE_SALARY);
+    public const string BASIC_SALARY = nameof(BASIC_SALARY);
     public const string DATE = nameof(DATE);
-    public const string ABSORPTION_ALLOWANCE = nameof(ABSORPTION_ALLOWANCE);
-    public const string TRANSPORTATION_ALLOWANCE = nameof(TRANSPORTATION_ALLOWANCE);
+    public const string ALLOWANCE = nameof(ALLOWANCE);
+    public const string TRANSPORTATION = nameof(TRANSPORTATION);
     public const string TAX = nameof(TAX);
     public const string OVERTIME_CALCULATOR_NAME = nameof(OVERTIME_CALCULATOR_NAME);
     public const string RECEIVED_SALARY = nameof(RECEIVED_SALARY);

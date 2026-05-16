@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class Inaitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -22,10 +22,10 @@ namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LastName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    BaseSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    BasicSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AbsorptionAllowance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TransportationAllowance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Allowance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Transportation = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Tax = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     OvertimeCalculatorName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OvertimeAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),

@@ -5,10 +5,10 @@ namespace OvetimePolicies1.Core.Domain.EmployeeSalaries.Parameterts.Update;
 public sealed record EmployeeSalaryUpdateParameter(
     string lastName,
     string firstName,
-    decimal baseSalary,
+    decimal basicSalary,
     DateTime date,
-    decimal absorptionAllowance,
-    decimal transportationAllowance,
+    decimal allowance,
+    decimal transportation,
     decimal tax,
     OvertimeCalculatorName overtimeCalculatorName,
     decimal overtimeAmount);

@@ -28,9 +28,9 @@ public sealed class EmployeeSalaryCreateValidation : AbstractValidator<EmployeeS
             .MaximumLength(MaxLengthConfiguration.NAME_MAX_LENGTH)
             .WithMessage(translator[TranslatorKeys.VALIDATION_ERROR_STRING_MAX_LENGTH, TranslatorKeys.LAST_NAME, MaxLengthConfiguration.NAME_MAX_LENGTH.ToString()]);
 
-        RuleFor(x => x.BaseSalary)
+        RuleFor(x => x.BasicSalary)
             .GreaterThanOrEqualTo(MaxLengthConfiguration.PRICE_MIN_VALUE)
-            .WithMessage(translator[TranslatorKeys.VALIDATION_ERROR_NUMBER_GRATER_OR_EQUAL_THAN, TranslatorKeys.BASE_SALARY]);
+            .WithMessage(translator[TranslatorKeys.VALIDATION_ERROR_NUMBER_GRATER_OR_EQUAL_THAN, TranslatorKeys.BASIC_SALARY]);
 
         RuleFor(x => x.Date)
             .Must(date => date != default)
