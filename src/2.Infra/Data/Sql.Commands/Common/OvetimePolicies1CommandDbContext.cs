@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using OvetimePolicies1.Core.Domain.EmployeeSalaries.Entities;
+using OvetimePolicies1.Core.Domain.EmployeeSalaries.ValueObjects;
+using OvetimePolicies1.Infra.Data.Sql.Commands.Common.ValueConverters;
 using System.Reflection;
 using Zamin.Extensions.Events.Outbox.Dal.EF;
 
@@ -15,4 +18,13 @@ public class OvetimePolicies1CommandDbContext : BaseOutboxCommandDbContext
         builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         base.OnModelCreating(builder);
     }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Properties<Deleted>().HaveConversion<DeletedValueConverter>();
+        configurationBuilder.Properties<OvertimeCalculatorName>().HaveConversion<OvertimeCalculatorNameValueConverter>();
+        base.ConfigureConventions(configurationBuilder);
+    }
+
+    public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
 }

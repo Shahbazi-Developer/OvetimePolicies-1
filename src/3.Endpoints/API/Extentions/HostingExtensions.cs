@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using OvetimePolicies1.Infra.Data.Sql.Commands.Common;
+using OvetimePolicies1.Infra.Data.Sql.Commands.Common.ParrotTranslatorinitializers;
+using OvetimePolicies1.Infra.Data.Sql.Queries.Common;
 using Serilog;
 using Zamin.EndPoints.Web.Extensions.ModelBinding;
 using Zamin.Extensions.DependencyInjection;
 using Zamin.Infra.Data.Sql.Commands.Interceptors;
-using OvetimePolicies1.Infra.Data.Sql.Commands.Common;
-using OvetimePolicies1.Infra.Data.Sql.Queries.Common;
 
 namespace OvetimePolicies1.Endpoints.API.Extentions;
 
@@ -24,8 +25,20 @@ public static class HostingExtensions
         //zamin
         builder.Services.AddZaminWebUserInfoService(configuration, "WebUserInfo", true);
 
+        var parrotTranslatorSection = configuration.GetSection("ParrotTranslator");
+
         //zamin
-        builder.Services.AddZaminParrotTranslator(configuration, "ParrotTranslator");
+        builder.Services.AddZaminParrotTranslator(option =>
+        {
+            option.ConnectionString = parrotTranslatorSection.GetValue<string>("ConnectionString")!;
+            option.SchemaName = parrotTranslatorSection.GetValue<string>("SchemaName")!;
+            option.TableName = parrotTranslatorSection.GetValue<string>("TableName")!;
+        });
+
+        ParrotTranslatorInitializer.Initialize(
+            parrotTranslatorSection.GetValue<string>("ConnectionString")!,
+            parrotTranslatorSection.GetValue<string>("SchemaName")!,
+            parrotTranslatorSection.GetValue<string>("TableName")!);
 
         //zamin
         //builder.Services.AddSoftwarePartDetector(configuration, "SoftwarePart");
@@ -35,6 +48,11 @@ public static class HostingExtensions
 
         //zamin
         builder.Services.AddZaminMicrosoftSerializer();
+
+        builder.Services.Configure<Microsoft.AspNetCore.Mvc.JsonOptions>(options =>
+        {
+            options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+        });
 
         //zamin
         builder.Services.AddZaminAutoMapperProfiles(configuration, "AutoMapper");

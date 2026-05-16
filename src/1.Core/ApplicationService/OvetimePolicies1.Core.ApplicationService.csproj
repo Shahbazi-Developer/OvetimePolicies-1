@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 		<PropertyGroup>
 				<TargetFramework>net8.0</TargetFramework>
@@ -11,7 +11,11 @@
 		</ItemGroup>
 
 		<ItemGroup>
+		  <ProjectReference Include="..\..\..\OvetimePolicies1.SharedKernel\OvetimePolicies1.SharedKernel.csproj" />
+		  <ProjectReference Include="..\..\0.Library\OvetimePolicies\OvetimePolicies.csproj" />
 		  <ProjectReference Include="..\Contracts\OvetimePolicies1.Core.Contracts.csproj" />
+		  <ProjectReference Include="..\Domain\OvetimePolicies1.Core.Domain.csproj" />
+		  <ProjectReference Include="..\RequestResponse\OvetimePolicies1.Core.RequestResponse.csproj" />
 		</ItemGroup>
 
 </Project>
