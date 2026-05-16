@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,13 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Zamin.Infra.Data.Sql.Queries" Version="8.0.0" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\1.Core\Contracts\OvetimePolicies1.Core.Contracts.csproj" />
     <ProjectReference Include="..\..\..\1.Core\RequestResponse\OvetimePolicies1.Core.RequestResponse.csproj" />
-    <ProjectReference Include="..\Sql.Commands\OvetimePolicies1.Infra.Data.Sql.Commands.csproj" />
   </ItemGroup>
 
 </Project>

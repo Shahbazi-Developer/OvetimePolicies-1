@@ -1,70 +1,34 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using OvetimePolicies1.Core.Contracts.EmployeeSalaries.Queries;
 using OvetimePolicies1.Core.RequestResponse.EmployeeSalaries.Queries.Get;
 using OvetimePolicies1.Core.RequestResponse.EmployeeSalaries.Queries.GetRange;
-using OvetimePolicies1.Infra.Data.Sql.Queries.Common;
-using OvetimePolicies1.Infra.Data.Sql.Queries.EmployeeSalaries.Entities;
-using Zamin.Infra.Data.Sql.Queries;
 
 namespace OvetimePolicies1.Infra.Data.Sql.Queries.EmployeeSalaries;
 
-public class EmployeeSalaryRepositrory
-    : BaseQueryRepository<OvetimePolicies1QueryDbContext>,
-      IEmployeeSalaryQueryRepasitory
+public sealed class EmployeeSalaryRepositrory : IEmployeeSalaryQueryRepasitory
 {
-    public EmployeeSalaryRepositrory(OvetimePolicies1QueryDbContext dbContext)
-        : base(dbContext)
+    private readonly string _connectionString;
+
+    public EmployeeSalaryRepositrory(IConfiguration configuration)
     {
+        ArgumentNullException.ThrowIfNull(configuration);
+        _connectionString = configuration.GetConnectionString("QueryDb_ConnectionString")
+                            ?? throw new InvalidOperationException(
+                                "Connection string 'QueryDb_ConnectionString' is not configured.");
     }
 
     public async Task<EmployeeSalaryGetQr?> ExecuteAsync(EmployeeSalaryGetQuery query)
     {
-        return await _dbContext.Set<EmployeeSalary>()
-            .Where(x => !x.Deleted
-                        && x.FirstName == query.FirstName
-                        && x.LastName == query.LastName
-                        && x.Date.Year == query.Date.Year
-                        && x.Date.Month == query.Date.Month)
-            .Select(x => new EmployeeSalaryGetQr
-            {
-                Id = x.Id,
-                LastName = x.LastName,
-                FirstName = x.FirstName,
-                BasicSalary = x.BasicSalary,
-                Date = x.Date,
-                Allowance = x.Allowance,
-                Transportation = x.Transportation,
-                Tax = x.Tax,
-                OvertimeCalculatorName = x.OvertimeCalculatorName,
-                OvertimeAmount = x.OvertimeAmount,
-                ReceivedSalary = x.ReceivedSalary,
-            })
-            .FirstOrDefaultAsync();
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync().ConfigureAwait(false);
+        return await EmployeeSalaryDapperRead.GetAsync(connection, query).ConfigureAwait(false);
     }
 
     public async Task<List<EmployeeSalaryGetRangeQr>> ExecuteAsync(EmployeeSalaryGetRangeQuery query)
     {
-        return await _dbContext.Set<EmployeeSalary>()
-            .Where(x => !x.Deleted
-                        && x.FirstName == query.FirstName
-                        && x.LastName == query.LastName
-                        && x.Date >= query.FromDate
-                        && x.Date <= query.ToDate)
-            .OrderBy(x => x.Date)
-            .Select(x => new EmployeeSalaryGetRangeQr
-            {
-                Id = x.Id,
-                LastName = x.LastName,
-                FirstName = x.FirstName,
-                BasicSalary = x.BasicSalary,
-                Date = x.Date,
-                Allowance = x.Allowance,
-                Transportation = x.Transportation,
-                Tax = x.Tax,
-                OvertimeCalculatorName = x.OvertimeCalculatorName,
-                OvertimeAmount = x.OvertimeAmount,
-                ReceivedSalary = x.ReceivedSalary,
-            })
-            .ToListAsync();
+        await using var connection = new SqlConnection(_connectionString);
+        await connection.OpenAsync().ConfigureAwait(false);
+        return await EmployeeSalaryDapperRead.GetRangeAsync(connection, query).ConfigureAwait(false);
     }
 }

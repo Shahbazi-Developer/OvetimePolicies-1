@@ -3,12 +3,12 @@ using System.Reflection;
 namespace OvetimePolicies1.SharedKernel.OvetimePolicies;
 
 /// <summary>
-/// Runtime access to <c>OvetimeSalaryPolicies</c> from layers that cannot reference the API project.
+/// Runtime access to <see cref="OvetimeSalaryPolicies"/> via reflection (same assembly as this registry).
 /// </summary>
 public static class OvetimeSalaryPoliciesRegistry
 {
-    private const string PoliciesAssemblyName = "OvetimePolicies1.Endpoints.API";
-    private const string PoliciesTypeFullName = "OvetimePolicies1.Endpoints.API.OvetimePolicies.OvetimeSalaryPolicies";
+    private const string PoliciesAssemblyName = "OvetimePolicies1.SharedKernel";
+    private const string PoliciesTypeFullName = "OvetimePolicies1.SharedKernel.OvetimePolicies.OvetimeSalaryPolicies";
 
     private static readonly Lazy<Type?> PoliciesTypeLazy = new(LoadPoliciesType);
 

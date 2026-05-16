@@ -1,9 +1,9 @@
 using System.Reflection;
 
-namespace OvetimePolicies1.Endpoints.API.OvetimePolicies;
+namespace OvetimePolicies1.SharedKernel.OvetimePolicies;
 
 /// <summary>
-/// Calculator methods invoked by reflection; names must match allowed overtime calculator names in the API.
+/// Calculator methods invoked by reflection from <see cref="OvetimeSalaryPoliciesRegistry"/>.
 /// Signature: basic salary, allowance, sum of both.
 /// </summary>
 public static class OvetimeSalaryPolicies

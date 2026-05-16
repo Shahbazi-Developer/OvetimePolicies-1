@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using OvetimePolicies1.Infra.Data.Sql.Commands.Common;
 using OvetimePolicies1.Infra.Data.Sql.Commands.Common.ParrotTranslatorinitializers;
-using OvetimePolicies1.Infra.Data.Sql.Queries.Common;
 using Serilog;
 using Zamin.EndPoints.Web.Extensions.ModelBinding;
 using Zamin.Extensions.DependencyInjection;
@@ -35,10 +34,7 @@ public static class HostingExtensions
             option.TableName = parrotTranslatorSection.GetValue<string>("TableName")!;
         });
 
-        ParrotTranslatorInitializer.Initialize(
-            parrotTranslatorSection.GetValue<string>("ConnectionString")!,
-            parrotTranslatorSection.GetValue<string>("SchemaName")!,
-            parrotTranslatorSection.GetValue<string>("TableName")!);
+        // ParrotTranslatorInitializer runs after EF migrations (ConfigurePipeline); DB must exist first for Docker/SQL.
 
         //zamin
         //builder.Services.AddSoftwarePartDetector(configuration, "SoftwarePart");
@@ -65,9 +61,6 @@ public static class HostingExtensions
         builder.Services.AddDbContext<OvetimePolicies1CommandDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("CommandDb_ConnectionString"))
             .AddInterceptors(new SetPersianYeKeInterceptor(), new AddAuditDataInterceptor()));
 
-        //QueryDbContext
-        builder.Services.AddDbContext<OvetimePolicies1QueryDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("QueryDb_ConnectionString")));
-
         //PollingPublisher
         builder.Services.AddZaminPollingPublisherDalSql(configuration, "PollingPublisherSqlStore");
         //builder.Services.AddZaminPollingPublisher(configuration, "PollingPublisher");
@@ -87,6 +80,9 @@ public static class HostingExtensions
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
+        ApplyCommandDbMigrationsIfRequested(app);
+        InitializeParrotTranslatorWithRetry(app.Configuration);
+
         //zamin
         app.UseZaminApiExceptionHandler();
 
@@ -109,7 +105,10 @@ public static class HostingExtensions
             builder.AllowAnyMethod();
         });
 
-        app.UseHttpsRedirection();
+        if (!app.Environment.IsEnvironment("Docker"))
+        {
+            app.UseHttpsRedirection();
+        }
 
         //app.Services.ReceiveEventFromRabbitMqMessageBus(new KeyValuePair<string, string>("MiniAggregateName", "AggregateNameCreated"));
 
@@ -123,5 +122,56 @@ public static class HostingExtensions
         //app.Services.GetService<SoftwarePartDetectorService>()?.Run();
 
         return app;
+    }
+
+    private static void ApplyCommandDbMigrationsIfRequested(WebApplication app)
+    {
+        if (!app.Configuration.GetValue<bool>("ApplyDatabaseMigrationsOnStartup"))
+            return;
+
+        using var scope = app.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<OvetimePolicies1CommandDbContext>();
+
+        const int maxAttempts = 30;
+        for (var attempt = 1; attempt <= maxAttempts; attempt++)
+        {
+            try
+            {
+                db.Database.Migrate();
+                return;
+            }
+            catch (Exception ex) when (attempt < maxAttempts)
+            {
+                Log.Warning(ex, "Command DB migrate attempt {Attempt}/{Max} failed; retrying.", attempt, maxAttempts);
+                Thread.Sleep(TimeSpan.FromSeconds(3));
+            }
+        }
+
+        db.Database.Migrate();
+    }
+
+    private static void InitializeParrotTranslatorWithRetry(IConfiguration configuration)
+    {
+        var section = configuration.GetSection("ParrotTranslator");
+        var cs = section.GetValue<string>("ConnectionString")!;
+        var schemaName = section.GetValue<string>("SchemaName")!;
+        var tableName = section.GetValue<string>("TableName")!;
+
+        const int maxAttempts = 30;
+        for (var attempt = 1; attempt <= maxAttempts; attempt++)
+        {
+            try
+            {
+                ParrotTranslatorInitializer.Initialize(cs, schemaName, tableName);
+                return;
+            }
+            catch (Exception ex) when (attempt < maxAttempts)
+            {
+                Log.Warning(ex, "Parrot translator init attempt {Attempt}/{Max} failed; retrying.", attempt, maxAttempts);
+                Thread.Sleep(TimeSpan.FromSeconds(3));
+            }
+        }
+
+        ParrotTranslatorInitializer.Initialize(cs, schemaName, tableName);
     }
 }
