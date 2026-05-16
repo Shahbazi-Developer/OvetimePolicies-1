@@ -1,4 +1,5 @@
 using FluentValidation;
+using OvetimePolicies1.SharedKernel.OvetimePolicies;
 using OvetimePolicies1.SharedKernel.Translators;
 using Zamin.Extensions.Translations.Abstractions;
 
@@ -6,8 +7,6 @@ namespace OvetimePolicies1.Core.RequestResponse.EmployeeSalaries.Commands.Update
 
 public sealed class EmployeeSalaryUpdateValidation : AbstractValidator<EmployeeSalaryUpdateCommand>
 {
-    private static readonly string[] AllowedCalculators = ["CalcurlatorA", "CalcurlatorB", "CalcurlatorC"];
-
     public EmployeeSalaryUpdateValidation(ITranslator translator)
     {
         RuleFor(x => x.FirstName)
@@ -40,7 +39,7 @@ public sealed class EmployeeSalaryUpdateValidation : AbstractValidator<EmployeeS
             .Cascade(CascadeMode.Stop)
             .NotEmpty()
             .WithMessage(translator[TranslatorKeys.VALIDATION_ERROR_REQUIRED, TranslatorKeys.OVERTIME_CALCULATOR_NAME])
-            .Must(name => AllowedCalculators.Contains(name, StringComparer.OrdinalIgnoreCase))
+            .Must(OvetimeSalaryPoliciesRegistry.IsValidCalculator)
             .WithMessage(translator[TranslatorKeys.VALIDATION_ERROR_NOT_VALID, TranslatorKeys.OVERTIME_CALCULATOR_NAME]);
     }
 }

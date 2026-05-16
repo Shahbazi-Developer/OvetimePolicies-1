@@ -1,4 +1,5 @@
 using System.Reflection;
+using OvetimePolicies1.SharedKernel.OvetimePolicies;
 using OvetimePolicies1.SharedKernel.Translators;
 using Zamin.Core.Domain.Exceptions;
 
@@ -6,57 +7,45 @@ namespace OvetimePolicies1.Core.ApplicationService.EmployeeSalaries.OvertimePoli
 
 public static class OvertimePolicyResolver
 {
-    private const string PoliciesAssemblyName = "OvetimePolicies1.Endpoints.API";
-
     public static decimal GetOvertimeAmount(string calculatorName, decimal basicSalary, decimal allowance)
     {
-        var basicAndAllowance = basicSalary + allowance;
-
-        Assembly assembly;
-        try
+        if (!OvetimeSalaryPoliciesRegistry.IsValidCalculator(calculatorName))
         {
-            assembly = LoadPoliciesAssembly();
+            throw new InvalidEntityStateException(
+                TranslatorKeys.VALIDATION_ERROR_NOT_VALID,
+                nameof(calculatorName));
         }
-        catch (FileNotFoundException)
+
+        var basicAndAllowance = basicSalary + allowance;
+        var policiesType = OvetimeSalaryPoliciesRegistry.GetPoliciesType();
+
+        if (policiesType is null)
         {
             throw new InvalidEntityStateException(
                 TranslatorKeys.VALIDATION_ERROR_NOT_EXIST,
                 nameof(calculatorName));
         }
 
-        foreach (var type in assembly.GetExportedTypes())
+        var method = policiesType.GetMethod(
+            calculatorName,
+            BindingFlags.Public | BindingFlags.Static | BindingFlags.IgnoreCase);
+
+        if (method is null)
         {
-            var method = type.GetMethod(
-                calculatorName,
-                BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.IgnoreCase);
-
-            if (method is null)
-                continue;
-
-            var result = InvokeCalculator(method, basicSalary, allowance, basicAndAllowance);
-            if (result is not null)
-                return Convert.ToDecimal(result);
+            throw new InvalidEntityStateException(
+                TranslatorKeys.VALIDATION_ERROR_NOT_VALID,
+                nameof(calculatorName));
         }
 
-        throw new InvalidEntityStateException(
-            TranslatorKeys.VALIDATION_ERROR_NOT_VALID,
-            nameof(calculatorName));
-    }
-
-    private static Assembly LoadPoliciesAssembly()
-    {
-        try
+        var result = InvokeCalculator(method, basicSalary, allowance, basicAndAllowance);
+        if (result is null)
         {
-            return Assembly.Load(PoliciesAssemblyName);
+            throw new InvalidEntityStateException(
+                TranslatorKeys.VALIDATION_ERROR_NOT_VALID,
+                nameof(calculatorName));
         }
-        catch (FileNotFoundException)
-        {
-            var path = Path.Combine(AppContext.BaseDirectory, $"{PoliciesAssemblyName}.dll");
-            if (File.Exists(path))
-                return Assembly.LoadFrom(path);
 
-            throw;
-        }
+        return Convert.ToDecimal(result);
     }
 
     private static object? InvokeCalculator(
