@@ -92,11 +92,8 @@ namespace OvetimePolicies1.Endpoints.API.EmployeeSalaries
         }
 
         [HttpGet("GetRange")]
-        public async Task<IActionResult> GetEmployeeSalaryRange([FromQuery] EmployeeSalaryGetRangeDto? dto)
+        public async Task<IActionResult> GetEmployeeSalaryRange([FromQuery] EmployeeSalaryGetRangeDto dto)
         {
-            if (dto is null)
-                return BadRequest("Request body is required.");
-
             EmployeeSalaryGetRangeQuery query = new EmployeeSalaryGetRangeQuery()
             {
                 FirstName = dto.FirstName,

@@ -25,7 +25,20 @@ public class EmployeeSalaryRepositrory
                         && x.LastName == query.LastName
                         && x.Date.Year == query.Date.Year
                         && x.Date.Month == query.Date.Month)
-            .Select(x => (EmployeeSalaryGetQr)x)
+            .Select(x => new EmployeeSalaryGetQr
+            {
+                Id = x.Id,
+                LastName = x.LastName,
+                FirstName = x.FirstName,
+                BasicSalary = x.BasicSalary,
+                Date = x.Date,
+                Allowance = x.Allowance,
+                Transportation = x.Transportation,
+                Tax = x.Tax,
+                OvertimeCalculatorName = x.OvertimeCalculatorName,
+                OvertimeAmount = x.OvertimeAmount,
+                ReceivedSalary = x.ReceivedSalary,
+            })
             .FirstOrDefaultAsync();
     }
 
@@ -38,7 +51,20 @@ public class EmployeeSalaryRepositrory
                         && x.Date >= query.FromDate
                         && x.Date <= query.ToDate)
             .OrderBy(x => x.Date)
-            .Select(x => (EmployeeSalaryGetRangeQr)x)
+            .Select(x => new EmployeeSalaryGetRangeQr
+            {
+                Id = x.Id,
+                LastName = x.LastName,
+                FirstName = x.FirstName,
+                BasicSalary = x.BasicSalary,
+                Date = x.Date,
+                Allowance = x.Allowance,
+                Transportation = x.Transportation,
+                Tax = x.Tax,
+                OvertimeCalculatorName = x.OvertimeCalculatorName,
+                OvertimeAmount = x.OvertimeAmount,
+                ReceivedSalary = x.ReceivedSalary,
+            })
             .ToListAsync();
     }
 }
