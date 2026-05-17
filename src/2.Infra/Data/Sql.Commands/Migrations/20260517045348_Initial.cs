@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
 {
     /// <inheritdoc />
-    public partial class Inaitial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,6 +66,25 @@ namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
                 {
                     table.PrimaryKey("PK_OutBoxEventItems", x => x.OutBoxEventItemId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RefreshTokenExpireTime = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
         }
 
         /// <inheritdoc />
@@ -77,6 +96,9 @@ namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
             migrationBuilder.DropTable(
                 name: "OutBoxEventItems",
                 schema: "zamin");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

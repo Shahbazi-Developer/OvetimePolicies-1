@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OvetimePolicies1.Core.RequestResponse.EmployeeSalaries.Commands.Create;
 using OvetimePolicies1.Core.RequestResponse.EmployeeSalaries.Commands.Delete;
@@ -10,6 +11,7 @@ using Zamin.EndPoints.Web.Controllers;
 namespace OvetimePolicies1.Endpoints.API.EmployeeSalaries
 {
 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeSalaryController : BaseController

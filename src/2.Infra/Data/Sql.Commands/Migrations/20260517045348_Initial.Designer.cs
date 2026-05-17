@@ -12,8 +12,8 @@ using OvetimePolicies1.Infra.Data.Sql.Commands.Common;
 namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
 {
     [DbContext(typeof(OvetimePolicies1CommandDbContext))]
-    [Migration("20260516132018_Inaitial")]
-    partial class Inaitial
+    [Migration("20260517045348_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,44 @@ namespace OvetimePolicies1.Infra.Data.Sql.Commands.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("OvetimePolicies1.Core.Domain.Authentication.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExpireTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users", (string)null);
+                });
 
             modelBuilder.Entity("OvetimePolicies1.Core.Domain.EmployeeSalaries.Entities.EmployeeSalary", b =>
                 {

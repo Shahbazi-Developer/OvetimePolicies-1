@@ -9,7 +9,10 @@ public class OvetimePolicies1CommandDbContextFactory : IDesignTimeDbContextFacto
     {
         var builder = new DbContextOptionsBuilder<OvetimePolicies1CommandDbContext>();
 
-        builder.UseSqlServer("Server =.; Database=OvetimePolicies1Db;User Id =sa ;Password =1qaz!QAZ ; MultipleActiveResultSets = true; Encrypt = false");
+        var migrationsAssembly = typeof(OvetimePolicies1CommandDbContext).Assembly.GetName().Name!;
+        builder.UseSqlServer(
+            "Server =.; Database=OvetimePolicies1Db;User Id =sa ;Password =1qaz!QAZ ; MultipleActiveResultSets = true; Encrypt = false",
+            sql => sql.MigrationsAssembly(migrationsAssembly));
 
         return new OvetimePolicies1CommandDbContext(builder.Options);
     }

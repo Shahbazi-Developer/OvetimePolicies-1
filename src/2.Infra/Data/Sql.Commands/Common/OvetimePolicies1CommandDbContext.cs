@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OvetimePolicies1.Core.Domain.Authentication.Entities;
 using OvetimePolicies1.Core.Domain.EmployeeSalaries.Entities;
 using OvetimePolicies1.Core.Domain.EmployeeSalaries.ValueObjects;
 using OvetimePolicies1.Infra.Data.Sql.Commands.Common.ValueConverters;
@@ -27,4 +28,6 @@ public class OvetimePolicies1CommandDbContext : BaseOutboxCommandDbContext
     }
 
     public DbSet<EmployeeSalary> EmployeeSalaries { get; set; }
+
+    public DbSet<User> Users { get; set; }
 }

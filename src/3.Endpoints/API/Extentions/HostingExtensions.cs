@@ -57,9 +57,13 @@ public static class HostingExtensions
         builder.Services.AddZaminInMemoryCaching();
         //builder.Services.AddZaminSqlDistributedCache(configuration, "SqlDistributedCache");
 
-        //CommandDbContext
-        builder.Services.AddDbContext<OvetimePolicies1CommandDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("CommandDb_ConnectionString"))
-            .AddInterceptors(new SetPersianYeKeInterceptor(), new AddAuditDataInterceptor()));
+        // CommandDbContext — migrations در همین اسمبلی Commands است؛ با Startup=API باید صریح باشد تا dotnet ef / PMC خطای mismatch ندهد.
+        var migrationsAssembly = typeof(OvetimePolicies1CommandDbContext).Assembly.GetName().Name!;
+        builder.Services.AddDbContext<OvetimePolicies1CommandDbContext>(options =>
+            options.UseSqlServer(
+                    configuration.GetConnectionString("CommandDb_ConnectionString"),
+                    sql => sql.MigrationsAssembly(migrationsAssembly))
+                .AddInterceptors(new SetPersianYeKeInterceptor(), new AddAuditDataInterceptor()));
 
         //PollingPublisher
         builder.Services.AddZaminPollingPublisherDalSql(configuration, "PollingPublisherSqlStore");
@@ -72,8 +76,6 @@ public static class HostingExtensions
         //builder.Services.AddZaminRabbitMqMessageBus(configuration, "RabbitMq");
 
         //builder.Services.AddZaminTraceJeager(configuration, "OpenTeletmetry");
-
-        builder.Services.AddSwaggerGen();
 
         return builder.Build();
     }
@@ -113,6 +115,9 @@ public static class HostingExtensions
         //app.Services.ReceiveEventFromRabbitMqMessageBus(new KeyValuePair<string, string>("MiniAggregateName", "AggregateNameCreated"));
 
         //var useIdentityServer = app.UseIdentityServer("OAuth");
+
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         var controllerBuilder = app.MapControllers();
 
