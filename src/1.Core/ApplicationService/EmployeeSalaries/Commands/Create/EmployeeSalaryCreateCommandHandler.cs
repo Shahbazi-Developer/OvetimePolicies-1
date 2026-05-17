@@ -14,11 +14,10 @@ public class EmployeeSalaryCreateCommandHandler : CommandHandler<EmployeeSalaryC
 {
     private readonly IEmployeeSalaryCommandRepasitory _employeeSalaryCommandRepasitory;
 
-    public EmployeeSalaryCreateCommandHandler(
-        ZaminServices zaminServices,
-        IEmployeeSalaryCommandRepasitory employeeSalaryCommandRepasitory,
-        ILogger<EmployeeSalaryCreateCommandHandler> logger,
-        ITranslator translator) : base(zaminServices)
+    public EmployeeSalaryCreateCommandHandler(ZaminServices zaminServices,
+                                              IEmployeeSalaryCommandRepasitory employeeSalaryCommandRepasitory,
+                                              ILogger<EmployeeSalaryCreateCommandHandler> logger,
+                                              ITranslator translator) : base(zaminServices)
     {
         _employeeSalaryCommandRepasitory = employeeSalaryCommandRepasitory;
     }

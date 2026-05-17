@@ -17,11 +17,10 @@ public class EmployeeSalaryUpdateCommandHandler : CommandHandler<EmployeeSalaryU
     private readonly ILogger<EmployeeSalaryUpdateCommandHandler> _logger;
     private readonly ITranslator _translator;
 
-    public EmployeeSalaryUpdateCommandHandler(
-        ZaminServices zaminServices,
-        ITranslator translator,
-        ILogger<EmployeeSalaryUpdateCommandHandler> logger,
-        IEmployeeSalaryCommandRepasitory employeeSalaryCommandRepasitory) : base(zaminServices)
+    public EmployeeSalaryUpdateCommandHandler(ZaminServices zaminServices,
+                                              ITranslator translator,
+                                              ILogger<EmployeeSalaryUpdateCommandHandler> logger,
+                                              IEmployeeSalaryCommandRepasitory employeeSalaryCommandRepasitory) : base(zaminServices)
     {
         _translator = translator;
         _logger = logger;
@@ -37,12 +36,9 @@ public class EmployeeSalaryUpdateCommandHandler : CommandHandler<EmployeeSalaryU
 
         if (entity is null)
         {
-            _logger.Log(
-                LogLevel.Information,
-                _translator[TranslatorKeys.VALIDATION_ERROR_NOT_EXIST, TranslatorKeys.EMPLOYEE_SALARY_RECORD]);
+            _logger.Log(LogLevel.Information, _translator[TranslatorKeys.VALIDATION_ERROR_NOT_EXIST, TranslatorKeys.EMPLOYEE_SALARY_RECORD]);
 
-            throw new InvalidEntityStateException(
-                _translator[TranslatorKeys.VALIDATION_ERROR_NOT_EXIST, TranslatorKeys.EMPLOYEE_SALARY_RECORD]);
+            throw new InvalidEntityStateException(_translator[TranslatorKeys.VALIDATION_ERROR_NOT_EXIST, TranslatorKeys.EMPLOYEE_SALARY_RECORD]);
         }
 
         entity.Update(command.ToParameter());

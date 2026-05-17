@@ -48,11 +48,7 @@ public static class OvertimePolicyResolver
         return Convert.ToDecimal(result);
     }
 
-    private static object? InvokeCalculator(
-        MethodInfo method,
-        decimal basicSalary,
-        decimal allowance,
-        decimal basicAndAllowance)
+    private static object? InvokeCalculator( MethodInfo method,decimal basicSalary, decimal allowance,decimal basicAndAllowance)
     {
         var parameters = method.GetParameters();
         var instance = method.IsStatic ? null : Activator.CreateInstance(method.DeclaringType!);

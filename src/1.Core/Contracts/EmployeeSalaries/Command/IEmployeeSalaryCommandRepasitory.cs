@@ -5,9 +5,5 @@ namespace OvetimePolicies1.Core.Contracts.EmployeeSalaries.Command;
 
 public interface IEmployeeSalaryCommandRepasitory : ICommandRepository<EmployeeSalary, int>
 {
-    Task<EmployeeSalary?> GetByPersonAndMonthAsync(
-        string firstName,
-        string lastName,
-        DateTime date,
-        CancellationToken cancellationToken = default);
+    Task<EmployeeSalary?> GetByPersonAndMonthAsync(string firstName,string lastName,DateTime date, CancellationToken cancellationToken = default);
 }

@@ -10,9 +10,8 @@ public sealed class EmployeeSalaryGetQueryHandler : QueryHandler<EmployeeSalaryG
 {
     private readonly IEmployeeSalaryQueryRepasitory _employeeSalaryQueryRepasitory;
 
-    public EmployeeSalaryGetQueryHandler(
-        ZaminServices zaminServices,
-        IEmployeeSalaryQueryRepasitory employeeSalaryQueryRepasitory) : base(zaminServices)
+    public EmployeeSalaryGetQueryHandler(ZaminServices zaminServices,
+                                         IEmployeeSalaryQueryRepasitory employeeSalaryQueryRepasitory) : base(zaminServices)
     {
         _employeeSalaryQueryRepasitory = employeeSalaryQueryRepasitory;
     }

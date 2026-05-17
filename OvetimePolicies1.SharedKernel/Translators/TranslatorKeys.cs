@@ -91,4 +91,17 @@ public class TranslatorKeys
     public const string HANDLER_RUN_LOG = nameof(HANDLER_RUN_LOG);
 
     #endregion
+
+    #region ApiAndAuth
+
+    public const string API_ERROR_REQUEST_BODY_REQUIRED = nameof(API_ERROR_REQUEST_BODY_REQUIRED);
+
+    public const string AUTH_USERNAME_ALREADY_EXISTS = nameof(AUTH_USERNAME_ALREADY_EXISTS);
+    public const string AUTH_REGISTER_SUCCESS = nameof(AUTH_REGISTER_SUCCESS);
+    public const string AUTH_INVALID_CREDENTIALS = nameof(AUTH_INVALID_CREDENTIALS);
+    public const string AUTH_INVALID_REFRESH_TOKEN = nameof(AUTH_INVALID_REFRESH_TOKEN);
+    public const string AUTH_ALREADY_LOGGED_OUT = nameof(AUTH_ALREADY_LOGGED_OUT);
+    public const string AUTH_LOGGED_OUT = nameof(AUTH_LOGGED_OUT);
+
+    #endregion
 }

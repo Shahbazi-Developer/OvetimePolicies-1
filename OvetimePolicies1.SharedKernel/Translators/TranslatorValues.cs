@@ -71,4 +71,17 @@ public class TranslatorValues
     public const string HANDLER_RUN_LOG = "اجرای هندلر {0}";
 
     #endregion
+
+    #region ApiAndAuth
+
+    public const string API_ERROR_REQUEST_BODY_REQUIRED = "بدنه درخواست ارسال نشده است.";
+
+    public const string AUTH_USERNAME_ALREADY_EXISTS = "نام کاربری قبلاً ثبت شده است.";
+    public const string AUTH_REGISTER_SUCCESS = "کاربر با موفقیت ثبت شد.";
+    public const string AUTH_INVALID_CREDENTIALS = "نام کاربری یا رمز عبور نادرست است.";
+    public const string AUTH_INVALID_REFRESH_TOKEN = "توکن تمدید نامعتبر است.";
+    public const string AUTH_ALREADY_LOGGED_OUT = "قبلاً از حساب خارج شده‌اید.";
+    public const string AUTH_LOGGED_OUT = "خروج انجام شد.";
+
+    #endregion
 }

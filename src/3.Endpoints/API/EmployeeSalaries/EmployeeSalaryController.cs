@@ -6,6 +6,7 @@ using OvetimePolicies1.Core.RequestResponse.EmployeeSalaries.Commands.Update;
 using OvetimePolicies1.Core.RequestResponse.EmployeeSalaries.Queries.Get;
 using OvetimePolicies1.Core.RequestResponse.EmployeeSalaries.Queries.GetRange;
 using OvetimePolicies1.Endpoints.API.DTOs;
+using OvetimePolicies1.SharedKernel.Translators;
 using Zamin.EndPoints.Web.Controllers;
 
 namespace OvetimePolicies1.Endpoints.API.EmployeeSalaries
@@ -23,7 +24,7 @@ namespace OvetimePolicies1.Endpoints.API.EmployeeSalaries
         public async Task<IActionResult> CreateEmployeeSalary([FromBody] EmployeeSalaryCreateDto? dto)
         {
             if (dto is null)
-                return BadRequest("Request body is required.");
+                return BadRequest(TranslatorValues.API_ERROR_REQUEST_BODY_REQUIRED);
 
             EmployeeSalaryCreateCommand command = new EmployeeSalaryCreateCommand()
             {
@@ -43,7 +44,7 @@ namespace OvetimePolicies1.Endpoints.API.EmployeeSalaries
         public async Task<IActionResult> DeleteEmployeeSalary([FromBody] EmployeeSalaryDeleteDto? dto)
         {
             if (dto is null)
-                return BadRequest("Request body is required.");
+                return BadRequest(TranslatorValues.API_ERROR_REQUEST_BODY_REQUIRED);
 
             EmployeeSalaryDeleteCommand command = new EmployeeSalaryDeleteCommand()
             {
@@ -58,7 +59,7 @@ namespace OvetimePolicies1.Endpoints.API.EmployeeSalaries
         public async Task<IActionResult> UpdateEmployeeSalary([FromBody] EmployeeSalaryUpdateDto? dto)
         {
             if (dto is null)
-                return BadRequest("Request body is required.");
+                return BadRequest(TranslatorValues.API_ERROR_REQUEST_BODY_REQUIRED);
 
             EmployeeSalaryUpdateCommand command = new EmployeeSalaryUpdateCommand()
             {
